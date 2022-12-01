@@ -1,0 +1,82 @@
+<!-- livebook:{"persist_outputs":true} -->
+
+# AOC 22/1
+
+```elixir
+Mix.install([
+  {:kino, "~> 0.7.0"}
+])
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+:ok
+```
+
+## Section
+
+```elixir
+input = Kino.Input.textarea("Please paste your input file:")
+```
+
+```elixir
+input
+|> Kino.Input.read()
+|> String.split("\n")
+|> Enum.chunk_while(
+  [],
+  fn el, acc ->
+    if String.length(el) == 0 do
+      {:cont, acc, []}
+    else
+      {:cont, [el | acc]}
+    end
+  end,
+  fn
+    [] -> {:cont, []}
+    acc -> {:cont, acc, []}
+  end
+)
+|> Enum.map(fn x -> Enum.map(x, &String.to_integer(&1)) end)
+|> Enum.map(fn x -> Enum.sum(x) end)
+|> Enum.max()
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+70296
+```
+
+```elixir
+input
+|> Kino.Input.read()
+|> String.split("\n")
+|> Enum.chunk_while(
+  [],
+  fn el, acc ->
+    if String.length(el) == 0 do
+      {:cont, acc, []}
+    else
+      {:cont, [el | acc]}
+    end
+  end,
+  fn
+    [] -> {:cont, []}
+    acc -> {:cont, acc, []}
+  end
+)
+|> Enum.map(fn x -> Enum.map(x, &String.to_integer(&1)) end)
+|> Enum.map(fn x -> Enum.sum(x) end)
+|> Enum.sort()
+|> Enum.reverse()
+|> Enum.take(3)
+|> Enum.sum()
+```
+
+<!-- livebook:{"output":true} -->
+
+```
+205381
+```
