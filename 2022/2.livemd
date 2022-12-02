@@ -1,0 +1,83 @@
+# AOC 22/2
+
+```elixir
+Mix.install([
+  {:kino, "~> 0.7.0"}
+])
+```
+
+## Section
+
+```elixir
+input = Kino.Input.textarea("Please paste your input file:")
+```
+
+```elixir
+defmodule Game do
+  def score(line) do
+    score_shape(Enum.at(String.split(line, " "), 1)) + score_outcome(line)
+  end
+
+  defp score_outcome("A X"), do: 3
+  defp score_outcome("A Y"), do: 6
+  defp score_outcome("A Z"), do: 0
+  defp score_outcome("B X"), do: 0
+  defp score_outcome("B Y"), do: 3
+  defp score_outcome("B Z"), do: 6
+  defp score_outcome("C X"), do: 6
+  defp score_outcome("C Y"), do: 0
+  defp score_outcome("C Z"), do: 3
+
+  defp score_shape("X"), do: 1
+  defp score_shape("Y"), do: 2
+  defp score_shape("Z"), do: 3
+end
+
+input
+|> Kino.Input.read()
+|> String.split("\n")
+|> Enum.map(&Game.score(&1))
+|> Enum.sum()
+```
+
+```elixir
+defmodule Game do
+  # A rock
+  # B paper
+  # C scissors
+  def hand("A X"), do: "A C"
+  def hand("A Y"), do: "A A"
+  def hand("A Z"), do: "A B"
+  def hand("B X"), do: "B A"
+  def hand("B Y"), do: "B B"
+  def hand("B Z"), do: "B C"
+  def hand("C X"), do: "C B"
+  def hand("C Y"), do: "C C"
+  def hand("C Z"), do: "C A"
+
+  def score(line) do
+    score_shape(Enum.at(String.split(line, " "), 1)) + score_outcome(line)
+  end
+
+  defp score_outcome("A A"), do: 3
+  defp score_outcome("A B"), do: 6
+  defp score_outcome("A C"), do: 0
+  defp score_outcome("B A"), do: 0
+  defp score_outcome("B B"), do: 3
+  defp score_outcome("B C"), do: 6
+  defp score_outcome("C A"), do: 6
+  defp score_outcome("C B"), do: 0
+  defp score_outcome("C C"), do: 3
+
+  defp score_shape("A"), do: 1
+  defp score_shape("B"), do: 2
+  defp score_shape("C"), do: 3
+end
+
+input
+|> Kino.Input.read()
+|> String.split("\n")
+|> Enum.map(&Game.hand(&1))
+|> Enum.map(&Game.score(&1))
+|> Enum.sum()
+```
